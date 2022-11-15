@@ -101,7 +101,26 @@ Migrated:  2022_11_15_180145_add_campos_to_users (421.65ms)
 
 ```
 
-finalizadas la instalacion de dependencias y migraciones. Corra el servidor con el siguiente comando
+Luego ejecutar los seeders de las tablas
+
+```
+php artisan db:seed
+
+```
+
+El sistema mostrara aviso de ejecucion de los registros insertados en las tablas de estado 
+
+```
+Seeding: Database\Seeders\TypesUserSeeder
+Seeded:  Database\Seeders\TypesUserSeeder (51.54ms)
+Seeding: Database\Seeders\StateQuotesSeeder
+Seeded:  Database\Seeders\StateQuotesSeeder (17.88ms)
+Seeding: Database\Seeders\ActivitiesSeeder
+Seeded:  Database\Seeders\ActivitiesSeeder (12.10ms)
+```
+
+
+finalizadas la instalacion de dependencias y migraciones y seeders; Corra el servidor con el siguiente comando
 
 Si tiene un orquestador de contenedores LAMP levante el orquestador con el siguiente comando. Siempre parado en la ruta del proyecto del docker-compose.yml
 
