@@ -141,7 +141,97 @@ PHP 7.4.27 Development Server (http://127.0.0.1:8000) started
 ```
 
 
+## API
 
+## USUARIOS
+
+* POST / http://localhost:8000/api/login
+
+Body
+```
+    {
+        "email": "sirianni.adrian@gmail.com",
+        "password": "cirilo1128"
+    }
+```
+Resp
+```
+{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9sb2dpbiIsImlhdCI6MTY2ODU1MjE3NSwiZXhwIjoxNjY4NTU1Nzc1LCJuYmYiOjE2Njg1NTIxNzUsImp0aSI6IlhUZ3FHclZWdExXeUxFMXciLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.yvsXkiRAWDSZ9dCKNdSTPQHW0D1aNwmnwgOilibmG34"
+}
+    
+```
+
+* POST / http://localhost:8000/api/register
+
+Body
+```
+    {
+    "name" :  "Federico",
+    "email" :  "fede@gmail.com",
+    "password" :  "fede",
+    "password_confirmation" :  "fede",
+    "surname" :  "Molina",
+    "type" :  1
+
+    }
+```
+Resp
+```
+{
+    "user": {
+        "name": "Federico",
+        "email": "fede@gmail.com",
+        "surname": "Molina",
+        "id_type": 1,
+        "updated_at": "2022-11-15T22:45:02.000000Z",
+        "created_at": "2022-11-15T22:45:02.000000Z",
+        "id": 3
+    },
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9yZWdpc3RlciIsImlhdCI6MTY2ODU1MjMwMiwiZXhwIjoxNjY4NTU1OTAyLCJuYmYiOjE2Njg1NTIzMDIsImp0aSI6IjBROUhvUXZibzV0YnM2RmEiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.yyTwbw1qWtVSlv6YOH9fAqz8AZHLMr7efyJehKd1LUk"
+}
+    
+```
+
+ GET / http://localhost:8000/api/profile
+
+
+```
+    Authorization
+    Bearer Token
+    Token
+    <token>
+```
+Resp
+```
+{
+    {
+        "status": "Token is Expired"
+    }
+
+    or 
+
+    {
+        "user": {
+            "id": 1,
+            "name": "Adrian",
+            "email": "sirianni.adrian@gmail.com",
+            "email_verified_at": null,
+            "surname": null,
+            "id_type": null,
+            "birth": null,
+            "id_activitie": null,
+            "address": null,
+            "location": null,
+            "province": null,
+            "country": null,
+            "created_at": "2022-11-14T22:09:30.000000Z",
+            "updated_at": "2022-11-14T22:09:30.000000Z"
+        }
+    }
+}
+    
+```
 
 
 ## Authors
