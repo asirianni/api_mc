@@ -233,6 +233,53 @@ Resp
     
 ```
 
+PUT / http://localhost:8000/api/user
+
+
+```
+    Authorization
+    Bearer Token
+    Token
+    <token>
+
+    {
+        "address":"billingurs 144",
+        "id_type":1,
+        "birth":"1985-12-13",
+        "id_activitie":1
+    }
+```
+Resp
+```
+{
+    {
+        "status": "Token is Expired"
+    }
+
+    or 
+
+    {
+        "update": true,
+        "user": {
+            "id": 1,
+            "name": "Adrian",
+            "email": "sirianni.adrian@gmail.com",
+            "email_verified_at": null,
+            "surname": null,
+            "id_type": 1,
+            "birth": "1985-12-13",
+            "id_activitie": 1,
+            "address": "billingurs 144",
+            "location": null,
+            "province": null,
+            "country": null,
+            "created_at": "2022-11-14T22:09:30.000000Z",
+            "updated_at": "2022-11-16T14:46:55.000000Z"
+        }
+    }
+}
+    
+```
 
 ## Authors
 
