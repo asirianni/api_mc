@@ -41,8 +41,12 @@ class UserController extends Controller
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 $data["response"]= response()->json(['user_not_found'], 404);
             }else{
+
+                //activamos la relacion de actividad para mostrar
+                $user->activitie;
+
                 $data["user"]=$user;
-                $data["response"]=response()->json(compact('user'));
+                $data["response"]=response()->json($user);
                 $data["state"]=true;
             }
           } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
@@ -117,13 +121,13 @@ class UserController extends Controller
             $user = User::find($token["user"]["id"]);
             
             
-                $user->address = $datos["address"];
-                $user->location = $datos["location"];
-                $user->province = $datos["province"];
-                $user->country = $datos["country"];
-                $user->id_type = $datos["id_type"];
-                $user->birth = $datos["birth"];
-                $user->id_activitie = $datos["id_activitie"];
+            $user->address = $datos["address"];
+            $user->location = $datos["location"];
+            $user->province = $datos["province"];
+            $user->country = $datos["country"];
+            $user->id_type = $datos["id_type"];
+            $user->birth = $datos["birth"];
+            $user->id_activitie = $datos["id_activitie"];
             
             
             $actualizacion["update"]=$user->save();
