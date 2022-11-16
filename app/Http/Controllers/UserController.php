@@ -27,18 +27,32 @@ class UserController extends Controller
 
     public function getAuthenticatedUser()
     {
+        $token=$this->validateToken();
+        return $token["response"];
+    }
+
+    //return array[3]: state,response,user
+    private function validateToken(){
+        $data["state"]=false;
+        $data["user"]=0;
+        $data["response"]=array();
+
         try {
-          if (!$user = JWTAuth::parseToken()->authenticate()) {
-                  return response()->json(['user_not_found'], 404);
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                $data["response"]= response()->json(['user_not_found'], 404);
+            }else{
+                $data["user"]=$user;
+                $data["response"]=response()->json(compact('user'));
+                $data["state"]=true;
+            }
+          } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+                $data["response"]=response()->json(['token_expired'], $e->getStatusCode());
+          } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+                $data["response"]=response()->json(['token_invalid'], $e->getStatusCode());
+          } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+                $data["response"]=response()->json(['token_absent'], $e->getStatusCode());
           }
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-                return response()->json(['token_expired'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-                return response()->json(['token_invalid'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-                return response()->json(['token_absent'], $e->getStatusCode());
-        }
-        return response()->json(compact('user'));
+        return $data;
     }
 
 
@@ -69,5 +83,42 @@ class UserController extends Controller
         $token = JWTAuth::fromUser($user);
 
         return response()->json(compact('user','token'),201);
+    }
+
+    public function update(Request $request)
+    {
+        $datos=$request->all();
+        $token=$this->validateToken();
+        
+        if($token["state"]){
+
+            
+            $validator = Validator::make($request->all(), [
+                'address' => 'required|string|max:255', 
+                'id_type' => 'required|integer', 
+                'birth' => 'nullable|date',
+                'id_activitie' => 'nullable|integer',  
+            ]);
+
+            if($validator->fails()){
+                return response()->json($validator->errors(),400);
+            }
+            
+            $user = User::find($token["user"]["id"]);
+            
+            if(isset($datos["address"])){
+                $user->address = $datos["address"];
+                $user->id_type = $datos["id_type"];
+                $user->birth = $datos["birth"];
+                $user->id_activitie = $datos["id_activitie"];
+            }
+            
+            $actualizacion["update"]=$user->save();
+            $actualizacion["user"]=$user;
+
+            $token["response"]=response()->json($actualizacion,200);
+        }
+
+        return $token["response"];
     }
 }
