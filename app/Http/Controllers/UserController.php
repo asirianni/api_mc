@@ -72,12 +72,19 @@ class UserController extends Controller
                 return response()->json($validator->errors()->toJson(),400);
         }
 
+        $ip= \App\Api::get_ip();
+        $direccion= \App\Api::get_address($ip);
+
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'surname' => $request->get('surname'),
             'id_type' => $request->get('type'),
+            'address' => $direccion["address"],
+            'location' => $direccion["location"],
+            'province' => $direccion["province"],
+            'country' => $direccion["country"],
         ]);
 
         $token = JWTAuth::fromUser($user);
@@ -94,8 +101,11 @@ class UserController extends Controller
 
             
             $validator = Validator::make($request->all(), [
-                'address' => 'required|string|max:255', 
-                'id_type' => 'required|integer', 
+                'address' => 'nullable|string|max:255',
+                'location' => 'nullable|string|max:255',
+                'province' => 'nullable|string|max:255', 
+                'country' => 'nullable|string|max:255',   
+                'id_type' => 'nullable|integer', 
                 'birth' => 'nullable|date',
                 'id_activitie' => 'nullable|integer',  
             ]);
@@ -106,12 +116,15 @@ class UserController extends Controller
             
             $user = User::find($token["user"]["id"]);
             
-            if(isset($datos["address"])){
+            
                 $user->address = $datos["address"];
+                $user->location = $datos["location"];
+                $user->province = $datos["province"];
+                $user->country = $datos["country"];
                 $user->id_type = $datos["id_type"];
                 $user->birth = $datos["birth"];
                 $user->id_activitie = $datos["id_activitie"];
-            }
+            
             
             $actualizacion["update"]=$user->save();
             $actualizacion["user"]=$user;

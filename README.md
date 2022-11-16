@@ -145,7 +145,7 @@ PHP 7.4.27 Development Server (http://127.0.0.1:8000) started
 
 ## USUARIOS
 
-* POST / http://localhost:8000/api/login
+POST / http://localhost:8000/api/login
 
 Body
 ```
@@ -162,7 +162,7 @@ Resp
     
 ```
 
-* POST / http://localhost:8000/api/register
+POST / http://localhost:8000/api/register
 
 Body
 ```
