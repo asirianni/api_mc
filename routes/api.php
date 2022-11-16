@@ -27,4 +27,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user','App\Http\Controllers\UserController@getAuthenticatedUser');
     Route::put('user','App\Http\Controllers\UserController@update');
 
+    Route::apiResource('activities', App\Http\Controllers\ActivitiesController::class);
+    Route::apiResource('quotes', App\Http\Controllers\QuotesController::class);
+    Route::apiResource('valuations', App\Http\Controllers\ValuationsController::class);
+
 });
