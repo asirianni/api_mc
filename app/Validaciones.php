@@ -45,4 +45,12 @@ class Validaciones{
         return $data;
     }
 
+    public static function filtro_list($listado, $campo_filtro, $datos){
+        
+        if(isset($datos[$campo_filtro])&& !empty($datos[$campo_filtro])){
+            $listado = $listado->where($campo_filtro,$datos[$campo_filtro]);
+        }
+        return $listado;
+    }
+
 }
