@@ -233,7 +233,8 @@ Resp
     
 ```
 
-PUT / http://localhost:8000/api/user
+<details>
+    <sumary>PUT / http://localhost:8000/api/user</sumary>
 
 
 ```
@@ -280,7 +281,7 @@ Resp
 }
     
 ```
-
+<details>
 GET / http://localhost:8000/api/users
 
 A travez del token se obtine el tipo de usurio que consulta.
