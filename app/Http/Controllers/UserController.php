@@ -138,4 +138,36 @@ class UserController extends Controller
 
         return $token["response"];
     }
+
+    public function list(Request $request)
+    {
+        $datos=$request->all();
+        $token=$this->validateToken();
+
+        if($token["state"]){
+            if($token["user"]->id_type===2){
+
+                $users = User::where('id_type', 1)->with("activitie");
+
+                $users =$this->filtro_list($users, "id_activitie", $datos);
+                $users =$this->filtro_list($users, "location", $datos);
+
+                $users = $users->get();
+               
+                $token["response"]=response()->json($users, "200");
+            }else{
+                $token["response"]=response()->json(['usuario sin permisos'], "403");
+            }
+        }
+
+        return $token["response"];
+    }
+
+    private function filtro_list($listado, $campo_filtro, $datos){
+        
+        if(isset($datos[$campo_filtro])&& !empty($datos[$campo_filtro])){
+            $listado = $listado->where($campo_filtro,$datos[$campo_filtro]);
+        }
+        return $listado;
+    }
 }

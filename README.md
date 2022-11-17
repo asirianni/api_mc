@@ -281,6 +281,60 @@ Resp
     
 ```
 
+GET / http://localhost:8000/api/users
+
+A travez del token se obtine el tipo de usurio que consulta.
+Si el usuario es de tipo 2 (visita) permite listar los usuarios con filtro
+
+```
+    Authorization
+    Bearer Token
+    Token
+    <token>
+
+    {
+        "id_activitie":1,
+        "location":"Buenos Aires"    
+    }
+```
+
+Resp
+```
+{
+    {
+        403: "tipo de usuario sin permisos"
+    }
+
+    or 
+
+    [
+        {
+            "id": 8,
+            "name": "Juan Carlos",
+            "email": "sirianni.juan@gmail.com",
+            "email_verified_at": null,
+            "surname": "Sirianni",
+            "id_type": 1,
+            "birth": null,
+            "id_activitie": 1,
+            "address": "-34.6036844 ; -58.3815591",
+            "location": "Buenos Aires",
+            "province": "Buenos Aires",
+            "country": "Argentina",
+            "created_at": "2022-11-17T13:38:57.000000Z",
+            "updated_at": "2022-11-17T13:38:57.000000Z",
+            "activitie": {
+                "id": 1,
+                "activitie": "jardinero",
+                "created_at": null,
+                "updated_at": null
+            }
+        }
+    ]
+}
+    
+```
+
 ## Authors
 
 * **Adrian Sirianni** - *Analista Tecnico Programador* -

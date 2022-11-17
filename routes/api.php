@@ -25,6 +25,7 @@ Route::post('login', 'App\Http\Controllers\UserController@authenticate');
 Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('user','App\Http\Controllers\UserController@getAuthenticatedUser');
+    Route::get('users','App\Http\Controllers\UserController@list');
     Route::put('user','App\Http\Controllers\UserController@update');
 
     Route::apiResource('activities', App\Http\Controllers\ActivitiesController::class);
