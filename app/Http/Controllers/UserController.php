@@ -41,8 +41,12 @@ class UserController extends Controller
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 $data["response"]= response()->json(['user_not_found'], 404);
             }else{
+
+                //activamos la relacion de actividad para mostrar
+                $user->activitie;
+
                 $data["user"]=$user;
-                $data["response"]=response()->json(compact('user'));
+                $data["response"]=response()->json($user);
                 $data["state"]=true;
             }
           } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
@@ -117,13 +121,13 @@ class UserController extends Controller
             $user = User::find($token["user"]["id"]);
             
             
-                $user->address = $datos["address"];
-                $user->location = $datos["location"];
-                $user->province = $datos["province"];
-                $user->country = $datos["country"];
-                $user->id_type = $datos["id_type"];
-                $user->birth = $datos["birth"];
-                $user->id_activitie = $datos["id_activitie"];
+            $user->address = $datos["address"];
+            $user->location = $datos["location"];
+            $user->province = $datos["province"];
+            $user->country = $datos["country"];
+            $user->id_type = $datos["id_type"];
+            $user->birth = $datos["birth"];
+            $user->id_activitie = $datos["id_activitie"];
             
             
             $actualizacion["update"]=$user->save();
@@ -133,5 +137,37 @@ class UserController extends Controller
         }
 
         return $token["response"];
+    }
+
+    public function list(Request $request)
+    {
+        $datos=$request->all();
+        $token=$this->validateToken();
+
+        if($token["state"]){
+            if($token["user"]->id_type===2){
+
+                $users = User::where('id_type', 1)->with("activitie");
+
+                $users =$this->filtro_list($users, "id_activitie", $datos);
+                $users =$this->filtro_list($users, "location", $datos);
+
+                $users = $users->get();
+               
+                $token["response"]=response()->json($users, "200");
+            }else{
+                $token["response"]=response()->json(['usuario sin permisos'], "403");
+            }
+        }
+
+        return $token["response"];
+    }
+
+    private function filtro_list($listado, $campo_filtro, $datos){
+        
+        if(isset($datos[$campo_filtro])&& !empty($datos[$campo_filtro])){
+            $listado = $listado->where($campo_filtro,$datos[$campo_filtro]);
+        }
+        return $listado;
     }
 }
