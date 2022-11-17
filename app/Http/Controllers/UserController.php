@@ -12,6 +12,7 @@ use Log;
 
 class UserController extends Controller
 {
+    //login
     public function authenticate(Request $request)
     {
       $credentials = $request->only('email', 'password');
@@ -25,15 +26,14 @@ class UserController extends Controller
       return response()->json(compact('token'));
     }
 
+    //get user
     public function getAuthenticatedUser()
     {
         $token=\App\Validaciones::validateToken();
         return $token["response"];
     }
 
-    
-
-
+    //registro de usuario
     public function register(Request $request)
     {
 
@@ -70,6 +70,7 @@ class UserController extends Controller
         return response()->json(compact('user','token'),201);
     }
 
+    //update usuario
     public function update(Request $request)
     {
         $datos=$request->all();
@@ -113,6 +114,7 @@ class UserController extends Controller
         return $token["response"];
     }
 
+    //listado de usuarios con filtro, valida que el tipo de usuario sea 2 (visita)
     public function list(Request $request)
     {
         $datos=$request->all();
@@ -123,8 +125,8 @@ class UserController extends Controller
 
                 $users = User::where('id_type', 1)->with("activitie");
 
-                $users =$this->filtro_list($users, "id_activitie", $datos);
-                $users =$this->filtro_list($users, "location", $datos);
+                $users =\App\Validaciones::filtro_list($users, "id_activitie", $datos);
+                $users =\App\Validaciones::filtro_list($users, "location", $datos);
 
                 $users = $users->get();
                
@@ -137,11 +139,5 @@ class UserController extends Controller
         return $token["response"];
     }
 
-    private function filtro_list($listado, $campo_filtro, $datos){
-        
-        if(isset($datos[$campo_filtro])&& !empty($datos[$campo_filtro])){
-            $listado = $listado->where($campo_filtro,$datos[$campo_filtro]);
-        }
-        return $listado;
-    }
+    
 }
