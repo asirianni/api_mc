@@ -27,37 +27,11 @@ class UserController extends Controller
 
     public function getAuthenticatedUser()
     {
-        $token=$this->validateToken();
+        $token=\App\Validaciones::validateToken();
         return $token["response"];
     }
 
-    //return array[3]: state,response,user
-    private function validateToken(){
-        $data["state"]=false;
-        $data["user"]=0;
-        $data["response"]=array();
-
-        try {
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                $data["response"]= response()->json(['user_not_found'], 404);
-            }else{
-
-                //activamos la relacion de actividad para mostrar
-                $user->activitie;
-
-                $data["user"]=$user;
-                $data["response"]=response()->json($user);
-                $data["state"]=true;
-            }
-          } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-                $data["response"]=response()->json(['token_expired'], $e->getStatusCode());
-          } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-                $data["response"]=response()->json(['token_invalid'], $e->getStatusCode());
-          } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-                $data["response"]=response()->json(['token_absent'], $e->getStatusCode());
-          }
-        return $data;
-    }
+    
 
 
     public function register(Request $request)
@@ -99,7 +73,7 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $datos=$request->all();
-        $token=$this->validateToken();
+        $token=\App\Validaciones::validateToken();
         
         if($token["state"]){
 
@@ -142,7 +116,7 @@ class UserController extends Controller
     public function list(Request $request)
     {
         $datos=$request->all();
-        $token=$this->validateToken();
+        $token=\App\Validaciones::validateToken();
 
         if($token["state"]){
             if($token["user"]->id_type===2){
