@@ -335,6 +335,200 @@ Resp
     
 ```
 
+## COTIZACIONES
+
+POST / http://localhost:8000/api/quotes
+
+Body
+```
+Authorization
+    Bearer Token
+    Token
+    <token>
+
+    {
+        "date":"2022-11-17",
+        "detail":"Necesito arreglar una canilla",
+        "id_professional":1,
+        "id_visitor":2
+    }
+```
+Resp
+```
+{
+     "status": "Authorization Token not found"
+
+}
+
+o
+
+{
+    "date": "2022-11-17",
+    "detail": "Necesito arreglar una canilla",
+    "id_professional": 2,
+    "id_visitor": 1,
+    "state": 1,
+    "updated_at": "2022-11-18T13:10:30.000000Z",
+    "created_at": "2022-11-18T13:10:30.000000Z",
+    "id": 3
+}
+```
+GET / http://localhost:8000/api/quotes/1
+
+Body
+```
+Authorization
+    Bearer Token
+    Token
+    <token>
+    
+```
+Resp
+```
+{
+     "status": "Authorization Token not found"
+
+}
+
+o
+
+{
+    "id": 2,
+    "date": "2022-11-17",
+    "detail": "Necesito arreglar una mampara",
+    "state": {
+        "id": 4,
+        "state": "FINALIZADA",
+        "created_at": null,
+        "updated_at": null
+    },
+    "id_professional": 2,
+    "id_visitor": 1,
+    "created_at": "2022-11-17T18:10:08.000000Z",
+    "updated_at": "2022-11-17T20:58:05.000000Z",
+    "professional": {
+        "id": 2,
+        "name": "Jesica",
+        "email": "lacolo88@gmail.com",
+        "email_verified_at": null,
+        "surname": "Jesica",
+        "id_type": 1,
+        "birth": null,
+        "id_activitie": null,
+        "address": null,
+        "location": null,
+        "province": null,
+        "country": null,
+        "created_at": "2022-11-15T21:04:11.000000Z",
+        "updated_at": "2022-11-15T21:04:11.000000Z"
+    },
+    "visitor": {
+        "id": 1,
+        "name": "Adrian",
+        "email": "sirianni.adrian@gmail.com",
+        "email_verified_at": null,
+        "surname": null,
+        "id_type": 2,
+        "birth": "1985-12-13",
+        "id_activitie": 2,
+        "address": "mitre 794",
+        "location": null,
+        "province": null,
+        "country": null,
+        "created_at": "2022-11-14T22:09:30.000000Z",
+        "updated_at": "2022-11-17T15:22:13.000000Z"
+    }
+}
+```
+PUT / http://localhost:8000/api/quotes/2
+
+
+```
+    Authorization
+    Bearer Token
+    Token
+    <token>
+
+    {
+        "state":3
+    }
+```
+Resp
+```
+{
+    {
+        "status": "Token is Expired"
+    }
+
+    or 
+
+    {
+        "id": 2,
+        "date": "2022-11-17",
+        "detail": "Necesito arreglar una mampara",
+        "state": {
+            "id": 3,
+            "state": "RECHAZADA",
+            "created_at": null,
+            "updated_at": null
+        },
+        "id_professional": 2,
+        "id_visitor": 1,
+        "created_at": "2022-11-17T18:10:08.000000Z",
+        "updated_at": "2022-11-18T13:16:33.000000Z"
+    }
+}
+    
+```
+GET / http://localhost:8000/api/quotes
+
+
+
+```
+    Authorization
+    Bearer Token
+    Token
+    <token>
+
+```
+
+Resp
+```
+{
+    {
+        403: "tipo de usuario sin permisos"
+    }
+
+    or 
+
+    [
+        {
+            "id": 8,
+            "name": "Juan Carlos",
+            "email": "sirianni.juan@gmail.com",
+            "email_verified_at": null,
+            "surname": "Sirianni",
+            "id_type": 1,
+            "birth": null,
+            "id_activitie": 1,
+            "address": "-34.6036844 ; -58.3815591",
+            "location": "Buenos Aires",
+            "province": "Buenos Aires",
+            "country": "Argentina",
+            "created_at": "2022-11-17T13:38:57.000000Z",
+            "updated_at": "2022-11-17T13:38:57.000000Z",
+            "activitie": {
+                "id": 1,
+                "activitie": "jardinero",
+                "created_at": null,
+                "updated_at": null
+            }
+        }
+    ]
+}
+    
+```
+
 ## Authors
 
 * **Adrian Sirianni** - *Analista Tecnico Programador* -
