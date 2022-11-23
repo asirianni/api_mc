@@ -16,8 +16,8 @@ class ValuationsResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'numero' => $this->id,
-            'fecha' => $this->date,
+            'valuacion numero:' => $this->id,
+            'puntos' => $this->points,
             'detalle' => $this->detail,
         ];
     }

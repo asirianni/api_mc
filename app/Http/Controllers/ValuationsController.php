@@ -7,8 +7,17 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Valuations;
 use App\Models\User;
 
+use App\Http\Requests\ValuationsRequest;
+use App\Http\Resources\ValuationsResource;
+use App\Services\ValuationService;
+
 class ValuationsController extends Controller
 {
+    private $valuationService;
+
+    public function __construct (){
+        $this->valuationService=new valuationService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,49 +44,12 @@ class ValuationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ValuationsRequest $request)
     {
-        //
-        $token=\App\Validaciones::validateToken();
-        $datos=$request->all();
-
-        $validator = Validator::make($request->all(), [
-            'points' => 'required|integer',
-            'detail' => 'required|string|max:255',
-            'id_user' => [
-                'required',
-                'integer',
-                function ($attribute, $value, $fail) {
-                    $user=User::find($value);
-                    if(empty($user)){
-                        $fail($attribute.' user no existe');
-                    }else{
-                        if ($user->id_type !== 2 ) {
-                            $fail($attribute.' no type');
-                        }
-                    }
-                },
-            ]
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors(),400);
-        }
-
-        $valuaction = new Valuations;
-        $valuaction->points=$datos["points"];
-        $valuaction->detail=$datos["detail"];
-        $valuaction->id_user=$datos["id_user"];
-        
-        $valuaction->save();
-       
-        $token["response"]=response()->json($valuaction,200);
-
-
-        return $token["response"];
+        return new ValuationsResource($this->valuationService->store($request));
     }
 
-    /**
+    /**s
      * Display the specified resource.
      *
      * @param  int  $id
@@ -85,17 +57,8 @@ class ValuationsController extends Controller
      */
     public function show($id)
     {
-        //
-        $token=\App\Validaciones::validateToken();
+        return new ValuationsResource($this->valuationService->find($id));
 
-        $valuation = Valuations::find($id);
-        
-        $valuation->id_user=User::find($valuation->id_user);
-
-        $token["response"]=response()->json($valuation,200);
-
-
-        return $token["response"];
     }
 
     /**

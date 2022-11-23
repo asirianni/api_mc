@@ -18,7 +18,7 @@ class ValuationsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,7 +29,12 @@ class ValuationsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'points' => 'required|integer',
+            'detail' => 'required|string|max:255',
+            'id_user' => [
+                'required',
+                'integer'
+            ]
         ];
     }
 

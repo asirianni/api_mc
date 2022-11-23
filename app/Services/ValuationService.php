@@ -11,4 +11,13 @@ class ValuationService
     public function __construct (){
         $this->repository=new ValuationRepository;
     }
+
+    public function store($data){
+        
+        return $this->repository->store($data);
+    }
+
+    public function find($data){
+        return $this->repository->find($data);
+    }
 }  
