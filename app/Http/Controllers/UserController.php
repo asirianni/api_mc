@@ -9,21 +9,21 @@ use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Log;
+use App\Http\Requests\AutenticateRequest;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
+    private $userService;
+
+    public function __construct (){
+        $this->userService=new UserService;
+    }
+
     //login
-    public function authenticate(Request $request)
+    public function authenticate(AutenticateRequest $request)
     {
-      $credentials = $request->only('email', 'password');
-      try {
-          if (! $token = JWTAuth::attempt($credentials)) {
-              return response()->json(['error' => 'invalid_credentials'], 400);
-          }
-      } catch (JWTException $e) {
-          return response()->json(['error' => 'could_not_create_token'], 500);
-      }
-      return response()->json(compact('token'));
+        return $this->userService->autenticate($request);
     }
 
     //get user
