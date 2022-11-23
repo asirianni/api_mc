@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\QuotesRequest;
 use App\Http\Requests\QuotesStateRequest;
 use App\Http\Resources\QuotesResource;
+use App\Http\Resources\QuoteResource;
 use App\Services\QuoteService;
 
 class QuotesController extends Controller
@@ -26,7 +27,7 @@ class QuotesController extends Controller
      */
     public function index()
     {
-        return $this->quoteService->all();
+        return new QuoteResource($this->quoteService->all());
     }
 
     /**

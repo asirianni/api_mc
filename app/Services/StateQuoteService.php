@@ -11,4 +11,8 @@ class StateQuoteService
     public function __construct (){
         $this->repository=new StateQuoteRepository;
     }
+
+    public function find($data){
+        return $this->repository->find($data);
+    }
 }  

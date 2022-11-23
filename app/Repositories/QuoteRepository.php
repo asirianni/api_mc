@@ -20,7 +20,9 @@ class QuoteRepository
     }
 
     public function all(){
-        $quotes= Quotes::all();
+        $quotes = Quotes::join("state_quotes","state_quotes.id", "=", "quotes.state")
+        ->select("quotes.id", "state_quotes.state", "quotes.date", "quotes.detail")
+        ->get();
 
         return $quotes;
     }
