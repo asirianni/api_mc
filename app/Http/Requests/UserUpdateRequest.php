@@ -9,7 +9,7 @@ use Illuminate\Validation\ValidationException;
 
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UserRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,11 +29,13 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'surname' => 'required|string|max:255',
-            'type' => 'required|integer',
+            'address' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'province' => 'nullable|string|max:255', 
+            'country' => 'nullable|string|max:255',   
+            'id_type' => 'nullable|integer', 
+            'birth' => 'nullable|date',
+            'id_activitie' => 'nullable|integer',
         ];
     }
 

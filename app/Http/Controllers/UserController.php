@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Log;
 use App\Http\Requests\AutenticateRequest;
+use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Services\UserService;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\UserUpdateResource;
 
 class UserController extends Controller
 {
@@ -29,89 +33,21 @@ class UserController extends Controller
     //get user
     public function getAuthenticatedUser()
     {
-        $token=\App\Validaciones::validateToken();
-        return $token["response"];
+        return new UserResource($this->userService->get_user());
     }
 
     //registro de usuario
-    public function register(Request $request)
+    public function register(UserRequest $request)
     {
-
-        Log::info($request);
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'surname' => 'required|string|max:255',
-            'type' => 'required|integer',
-        ]);
-
-        if($validator->fails()){
-                return response()->json($validator->errors()->toJson(),400);
-        }
-
-        $ip= \App\Api::get_ip();
-        $direccion= \App\Api::get_address($ip);
-
-        $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'surname' => $request->get('surname'),
-            'id_type' => $request->get('type'),
-            'address' => $direccion["address"],
-            'location' => $direccion["location"],
-            'province' => $direccion["province"],
-            'country' => $direccion["country"],
-        ]);
-
-        $token = JWTAuth::fromUser($user);
-
-        return response()->json(compact('user','token'),201);
+        return new UserResource($this->userService->register($request));
     }
 
     //update usuario
-    public function update(Request $request)
+    public function update(UserUpdateRequest $request)
     {
-        $datos=$request->all();
-        $token=\App\Validaciones::validateToken();
-        
-        if($token["state"]){
 
-            
-            $validator = Validator::make($request->all(), [
-                'address' => 'nullable|string|max:255',
-                'location' => 'nullable|string|max:255',
-                'province' => 'nullable|string|max:255', 
-                'country' => 'nullable|string|max:255',   
-                'id_type' => 'nullable|integer', 
-                'birth' => 'nullable|date',
-                'id_activitie' => 'nullable|integer',  
-            ]);
+        return $this->userService->update($request);
 
-            if($validator->fails()){
-                return response()->json($validator->errors(),400);
-            }
-            
-            $user = User::find($token["user"]["id"]);
-            
-            
-            $user->address = $datos["address"];
-            $user->location = $datos["location"];
-            $user->province = $datos["province"];
-            $user->country = $datos["country"];
-            $user->id_type = $datos["id_type"];
-            $user->birth = $datos["birth"];
-            $user->id_activitie = $datos["id_activitie"];
-            
-            
-            $actualizacion["update"]=$user->save();
-            $actualizacion["user"]=$user;
-
-            $token["response"]=response()->json($actualizacion,200);
-        }
-
-        return $token["response"];
     }
 
     //listado de usuarios con filtro, valida que el tipo de usuario sea 2 (visita)
