@@ -37,10 +37,24 @@ class UserRepository
         $user->birth = $request["birth"];
         $user->id_activitie = $request["id_activitie"];
         
-        
-        $actualizacion["update"]=$user->save();
-        $actualizacion["user"]=$user;
+        $user->save();
 
-        return $actualizacion;
+        return $user;
+    }
+
+    public function list($request){
+
+        $datos=$request->all();
+
+        $token=\App\Validaciones::validateToken();
+
+        $users = User::all();
+
+        //$users =\App\Validaciones::filtro_list($users, "id_activitie", $datos);
+        //$users =\App\Validaciones::filtro_list($users, "location", $datos);
+
+        //$users = $users->get();
+
+        return $users;
     }
 }

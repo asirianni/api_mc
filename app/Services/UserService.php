@@ -47,4 +47,8 @@ class UserService
         return $this->repository->update($request,$token);
     }
 
+    public function list($request){
+        return $this->repository->list($request);
+    }
+
 }

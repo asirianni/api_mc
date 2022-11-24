@@ -17,10 +17,17 @@ class UserUpdateResource extends JsonResource
     {
         
         return [
-            'id' => $this->user->id,
-            'name' => $this->user->name,
-            'email' => $this->user->email,
-            'surname' => $this->user->surname,
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'surname' => $this->surname,
+            'address' => $this->address,
+            'location' => $this->location,
+            'province' => $this->province,
+            'country' => $this->country,
+            'id_type' => $this->id_type,
+            'birth' => $this->birth,
+            'id_activitie' => $this->id_activitie,
         ];
     }
 }
