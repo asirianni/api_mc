@@ -30,6 +30,7 @@ class ActivitiesRequest extends FormRequest
     {
         return [
             //
+            'activitie' => 'required|string|max:255|unique:activities',
         ];
     }
 

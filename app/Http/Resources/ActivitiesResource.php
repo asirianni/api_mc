@@ -16,9 +16,8 @@ class ActivitiesResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'numero' => $this->id,
-            'fecha' => $this->date,
-            'detalle' => $this->detail,
+            'id' => $this->id,
+            'trabajo' => $this->activitie
         ];
     }
 }

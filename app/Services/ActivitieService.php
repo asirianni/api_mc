@@ -11,4 +11,19 @@ class ActivitieService
     public function __construct (){
         $this->repository=new ActivitieRepository;
     }
+
+    public function list(){
+        
+        return $this->repository->all();
+    }
+
+    public function store($data){
+        
+        return $this->repository->store($data);
+    }
+
+    public function update($data,$id){
+        
+        return $this->repository->update($data,$id);
+    }
 }    
