@@ -9,7 +9,7 @@ use Illuminate\Validation\ValidationException;
 
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ActivitiesRequest extends FormRequest
+class ValuationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,8 +29,12 @@ class ActivitiesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-            'activitie' => 'required|string|max:255|unique:activities',
+            'points' => 'required|integer',
+            'detail' => 'required|string|max:255',
+            'id_user' => [
+                'required',
+                'integer'
+            ]
         ];
     }
 

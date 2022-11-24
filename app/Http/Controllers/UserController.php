@@ -14,6 +14,7 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Services\UserService;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserUpdateResource;
 
 class UserController extends Controller
@@ -54,7 +55,7 @@ class UserController extends Controller
     public function list(Request $request)
     {
 
-        return $this->userService->list($request);
+        return new UserCollection($this->userService->list($request));
         
         
     }

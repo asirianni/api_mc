@@ -3,23 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Services\ActivitieService;
+use App\Http\Resources\ActivitieResource;
+use App\Http\Requests\ActivitieRequest;
 
-use App\Http\Requests\QuotesRequest;
-use App\Http\Requests\QuotesStateRequest;
-use App\Http\Resources\QuotesResource;
-use App\Http\Resources\QuoteResource;
-use App\Services\QuoteService;
-
-class QuotesController extends Controller
+class ActivitieController extends Controller
 {
-
-    private $quoteService;
+    private $activitieService;
 
     public function __construct (){
-        $this->quoteService=new QuoteService;
+        $this->activitieService=new ActivitieService;
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,18 +21,21 @@ class QuotesController extends Controller
      */
     public function index()
     {
-        return new QuoteResource($this->quoteService->all());
+        //
+        return $this->activitieService->list();
     }
 
+    
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(QuotesRequest $request)
+    public function store(ActivitieRequest $request)
     {
-        return new QuotesResource($this->quoteService->store($request));
+        //
+        return new ActivitieResource($this->activitieService->store($request));
     }
 
     /**
@@ -49,10 +46,12 @@ class QuotesController extends Controller
      */
     public function show($id)
     {
-        return new QuotesResource($this->quoteService->find($id));
+        //
+        return new ActivitieResource($this->activitieService->get($id));
     }
 
    
+
     /**
      * Update the specified resource in storage.
      *
@@ -60,8 +59,11 @@ class QuotesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(QuotesStateRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        return new QuotesResource($this->quoteService->update($request,$id));
+        //
+        return new ActivitieResource($this->activitieService->update($request, $id));
     }
+
+    
 }

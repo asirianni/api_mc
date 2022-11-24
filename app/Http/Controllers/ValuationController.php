@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Valuations;
 use App\Models\User;
 
-use App\Http\Requests\ValuationsRequest;
-use App\Http\Resources\ValuationsResource;
+use App\Http\Requests\ValuationRequest;
+use App\Http\Resources\ValuationResource;
 use App\Services\ValuationService;
 
-class ValuationsController extends Controller
+class ValuationController extends Controller
 {
     private $valuationService;
 
@@ -44,9 +44,9 @@ class ValuationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValuationsRequest $request)
+    public function store(ValuationRequest $request)
     {
-        return new ValuationsResource($this->valuationService->store($request));
+        return new ValuationResource($this->valuationService->store($request));
     }
 
     /**s
@@ -57,7 +57,7 @@ class ValuationsController extends Controller
      */
     public function show($id)
     {
-        return new ValuationsResource($this->valuationService->find($id));
+        return new ValuationResource($this->valuationService->find($id));
 
     }
 

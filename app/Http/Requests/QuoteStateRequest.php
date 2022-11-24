@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class QuotesStateRequest extends FormRequest
+class QuoteStateRequest extends FormRequest
 {
    
     /**

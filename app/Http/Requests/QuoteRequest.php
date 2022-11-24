@@ -9,8 +9,9 @@ use Illuminate\Validation\ValidationException;
 
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ValuationsRequest extends FormRequest
+class QuoteRequest extends FormRequest
 {
+   
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,18 +27,25 @@ class ValuationsRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
+        
         return [
-            'points' => 'required|integer',
+            'date' => 'required|date',
             'detail' => 'required|string|max:255',
-            'id_user' => [
+            'id_professional' => [
+                'required',
+                'integer'
+            ],
+            'id_visitor' => [
                 'required',
                 'integer'
             ]
         ];
     }
+    
 
+   
     protected function failedValidation(Validator $validator)
     {
         
@@ -46,4 +54,5 @@ class ValuationsRequest extends FormRequest
             response()->json(['data' => $errors], 422)
         );
     }
+    
 }
