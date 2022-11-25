@@ -3,9 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Valuations;
+use App\Models\User;
 
-class ActivitiesController extends Controller
+use App\Http\Requests\ValuationRequest;
+use App\Http\Resources\ValuationResource;
+use App\Services\ValuationService;
+
+class ValuationController extends Controller
 {
+    private $valuationService;
+
+    public function __construct (){
+        $this->valuationService=new valuationService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -32,12 +44,12 @@ class ActivitiesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ValuationRequest $request)
     {
-        //
+        return new ValuationResource($this->valuationService->store($request->all()));
     }
 
-    /**
+    /**s
      * Display the specified resource.
      *
      * @param  int  $id
@@ -45,7 +57,8 @@ class ActivitiesController extends Controller
      */
     public function show($id)
     {
-        //
+        return new ValuationResource($this->valuationService->find($id));
+
     }
 
     /**
