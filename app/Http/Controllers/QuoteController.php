@@ -38,7 +38,7 @@ class QuoteController extends Controller
      */
     public function store(QuoteRequest $request)
     {
-        return new QuotesResource($this->quoteService->store($request));
+        return new QuotesResource($this->quoteService->store($request->all()));
     }
 
     /**
@@ -62,6 +62,6 @@ class QuoteController extends Controller
      */
     public function update(QuoteStateRequest $request, $id)
     {
-        return new QuotesResource($this->quoteService->update($request,$id));
+        return new QuotesResource($this->quoteService->update($request->all(),$id));
     }
 }

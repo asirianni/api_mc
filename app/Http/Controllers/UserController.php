@@ -28,7 +28,7 @@ class UserController extends Controller
     //login
     public function authenticate(AutenticateRequest $request)
     {
-        return $this->userService->autenticate($request);
+        return $this->userService->autenticate($request->all());
     }
 
     //get user
@@ -40,14 +40,14 @@ class UserController extends Controller
     //registro de usuario
     public function register(UserRequest $request)
     {
-        return new UserUpdateResource($this->userService->register($request));
+        return new UserUpdateResource($this->userService->register($request->all()));
     }
 
     //update usuario
     public function update(UserUpdateRequest $request)
     {
 
-        return new UserUpdateResource($this->userService->update($request));
+        return new UserUpdateResource($this->userService->update($request->all()));
 
     }
 
@@ -55,7 +55,7 @@ class UserController extends Controller
     public function list(Request $request)
     {
 
-        return new UserCollection($this->userService->list($request));
+        return new UserCollection($this->userService->list($request->all()));
         
         
     }

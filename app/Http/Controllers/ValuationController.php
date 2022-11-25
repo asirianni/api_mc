@@ -46,7 +46,7 @@ class ValuationController extends Controller
      */
     public function store(ValuationRequest $request)
     {
-        return new ValuationResource($this->valuationService->store($request));
+        return new ValuationResource($this->valuationService->store($request->all()));
     }
 
     /**s

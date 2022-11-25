@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\ActivitieService;
 use App\Http\Resources\ActivitieResource;
 use App\Http\Requests\ActivitieRequest;
+use App\Http\Resources\ActivitieCollection;
 
 class ActivitieController extends Controller
 {
@@ -22,7 +23,7 @@ class ActivitieController extends Controller
     public function index()
     {
         //
-        return $this->activitieService->list();
+        return new ActivitieCollection($this->activitieService->list());
     }
 
     
@@ -35,7 +36,7 @@ class ActivitieController extends Controller
     public function store(ActivitieRequest $request)
     {
         //
-        return new ActivitieResource($this->activitieService->store($request));
+        return new ActivitieResource($this->activitieService->store($request->all()));
     }
 
     /**
@@ -62,7 +63,7 @@ class ActivitieController extends Controller
     public function update(Request $request, $id)
     {
         //
-        return new ActivitieResource($this->activitieService->update($request, $id));
+        return new ActivitieResource($this->activitieService->update($request->all(), $id));
     }
 
     
