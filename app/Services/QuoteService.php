@@ -25,7 +25,13 @@ class QuoteService
 
     public function all(){
         
-        return $this->repository->all();
+        $all=$this->repository->all();
+        
+        foreach($all as $a){
+            $a->state=$this->stateQuoteService->find($a->state);
+        }
+
+        return $all;
     }
 
     public function find($data){

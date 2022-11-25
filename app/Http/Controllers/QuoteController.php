@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests\QuoteRequest;
 use App\Http\Requests\QuoteStateRequest;
-use App\Http\Resources\QuotesResource;
 use App\Http\Resources\QuoteResource;
+use App\Http\Resources\QuoteCollection;
+
 use App\Services\QuoteService;
 
 class QuoteController extends Controller
@@ -27,7 +28,7 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        return new QuoteResource($this->quoteService->all());
+        return new QuoteCollection($this->quoteService->all());
     }
 
     /**
@@ -38,7 +39,7 @@ class QuoteController extends Controller
      */
     public function store(QuoteRequest $request)
     {
-        return new QuotesResource($this->quoteService->store($request->all()));
+        return new QuoteResource($this->quoteService->store($request->all()));
     }
 
     /**
@@ -49,7 +50,7 @@ class QuoteController extends Controller
      */
     public function show($id)
     {
-        return new QuotesResource($this->quoteService->find($id));
+        return new QuoteResource($this->quoteService->find($id));
     }
 
    
@@ -62,6 +63,6 @@ class QuoteController extends Controller
      */
     public function update(QuoteStateRequest $request, $id)
     {
-        return new QuotesResource($this->quoteService->update($request->all(),$id));
+        return new QuoteResource($this->quoteService->update($request->all(),$id));
     }
 }

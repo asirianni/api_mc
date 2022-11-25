@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuotesResource extends JsonResource
+class QuoteCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,12 +14,6 @@ class QuotesResource extends JsonResource
      */
     public function toArray($request)
     {
-        
-        return [
-            'numero' => $this->id,
-            'fecha' => $this->date,
-            'detalle' => $this->detail,
-            'estado' => $this->state->state,
-        ];
+        return parent::toArray($request);
     }
 }

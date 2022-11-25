@@ -46,18 +46,13 @@ class UserController extends Controller
     //update usuario
     public function update(UserUpdateRequest $request)
     {
-
         return new UserUpdateResource($this->userService->update($request->all()));
-
     }
 
-    //listado de usuarios con filtro, valida que el tipo de usuario sea 2 (visita)
-    public function list(Request $request)
+    // lista de usuarios
+    public function list()
     {
-
-        return new UserCollection($this->userService->list($request->all()));
-        
-        
+        return new UserCollection($this->userService->list());
     }
 
     

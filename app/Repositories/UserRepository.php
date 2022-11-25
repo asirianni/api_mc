@@ -12,11 +12,11 @@ class UserRepository
         
 
         $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'surname' => $request->get('surname'),
-            'id_type' => $request->get('type'),
+            'name' => $request["name"],
+            'email' => $request["email"],
+            'password' => Hash::make($request["password"]),
+            'surname' => $request["surname"],
+            'id_type' => $request["type"],
             'address' => $direccion["address"],
             'location' => $direccion["location"],
             'province' => $direccion["province"],
@@ -42,18 +42,9 @@ class UserRepository
         return $user;
     }
 
-    public function list($request){
-
-        $datos=$request->all();
-
-        $token=\App\Validaciones::validateToken();
+    public function list(){
 
         $users = User::all();
-
-        //$users =\App\Validaciones::filtro_list($users, "id_activitie", $datos);
-        //$users =\App\Validaciones::filtro_list($users, "location", $datos);
-
-        //$users = $users->get();
 
         return $users;
     }

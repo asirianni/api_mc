@@ -18,7 +18,10 @@ class UserService
     }
 
     public function autenticate($request){
-        $credentials = $request->only('email', 'password');
+       
+        $credentials["email"]=$request["email"];
+        $credentials["password"]=$request["password"];
+
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 400);
@@ -47,8 +50,8 @@ class UserService
         return $this->repository->update($request,$token);
     }
 
-    public function list($request){
-        return $this->repository->list($request);
+    public function list(){
+        return $this->repository->list();
     }
 
 }
